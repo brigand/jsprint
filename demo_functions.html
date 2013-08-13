@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Function Demo Page</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Function Demo Page for <a href="./">printjs</a></h1>
+<h2>This is the code we run</h2>
+<pre>
+function greet(name) {
+    return "Hello " + name + "!";
+}
+
+jsprint(greet, "world");
+
+function sum(a, b) {
+    return a + b;
+}
+
+jsprint("the sum of two numbers", sum, 1, 1);
+</pre>
+<hr>
+
+</div>
+
+<script type="text/javascript" src="src/bootstrap_gen.js"></script>
+<script type="text/javascript" src="src/jsprint.js"></script>
+<script>
+    function greet(name) {
+        return "Hello " + name + "!";
+    }
+
+    jsprint(greet, "world");
+
+    function sum(a, b) {
+        return a + b;
+    }
+
+    jsprint("the sum of two numbers", sum, 1, 1);
+</script>
+</body>
+</html>

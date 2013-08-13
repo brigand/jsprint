@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minified Demo Page</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Minified Demo Page</h1>
+<h2>This is the code we run</h2>
+<pre>
+jsprint("I am some text.");
+jsprint("Some Text", "I am some text with a custom title.");
+jsprint(["apples", "fruit", "bananas"]);
+jsprint("Array with a Title", ["apples", "fruit", "bananas"]);
+jsprint(9);
+jsprint("The answer to life, the universe, and everything", 42);
+jsprint("Whoo! Objects", {cats: 49, dogs: 22});
+
+function CrazyOldLady(cats, dogs){
+    this.cats = cats;
+    this.dogs = dogs;
+}
+
+jsprint(new CrazyOldLady(49, 22), "note: this works without a title");
+
+</pre>
+
+<h1>And the output shows up here:</h1>
+</div>
+
+<script type="text/javascript" src="build/output/jsprint.min.js"></script>
+<script>
+    //jsprint.condenced = true;
+    jsprint("I am some text.");
+    jsprint("Some Text", "I am some text with a custom title.");
+    jsprint(["apples", "fruit", "bananas"]);
+    jsprint("Array with a Title", ["apples", "fruit", "bananas"]);
+    jsprint(9);
+    jsprint("The answer to life, the universe, and everything", 42);
+    jsprint("Whoo! Objects", {cats: 49, dogs: 22});
+
+    function CrazyOldLady(cats, dogs){
+        this.cats = cats;
+        this.dogs = dogs;
+    }
+
+    jsprint(new CrazyOldLady(49, 22), "note: this works without a title");
+
+</script>
+</body>
+</html>
