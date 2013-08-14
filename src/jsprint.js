@@ -7,11 +7,12 @@
 
   rootElement.className = 'container';
 
-  document.body.appendChild(rootElement);
-
-  bootstrap.getBootstrap();
-
   row = null;
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.appendChild(rootElement);
+    return bootstrap.getBootstrap();
+  });
 
   FunctionWatcher = (function() {
     function FunctionWatcher(fun, args) {

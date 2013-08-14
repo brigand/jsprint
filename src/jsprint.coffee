@@ -1,8 +1,10 @@
 rootElement = document.createElement 'div'
 rootElement.className = 'container'
-document.body.appendChild(rootElement)
-bootstrap.getBootstrap()
 row = null
+
+document.addEventListener "DOMContentLoaded", ->
+  document.body.appendChild(rootElement)
+  bootstrap.getBootstrap()
 
 class FunctionWatcher
   constructor: (@fun, @args) ->

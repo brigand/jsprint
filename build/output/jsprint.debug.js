@@ -1,4 +1,4 @@
-// jsprint 0.1.0
+// jsprint 0.1.1
 // (c) 2013 Frankie Bagnardi - http://brigand.github.io/jsprint/
 // License: MIT (http://www.opensource.org/licenses/mit-license.php)
 (function(){
@@ -147,11 +147,12 @@ rootElement = document.createElement('div');
 
 rootElement.className = 'container';
 
-document.body.appendChild(rootElement);
-
-bootstrap.getBootstrap();
-
 row = null;
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.body.appendChild(rootElement);
+  return bootstrap.getBootstrap();
+});
 
 FunctionWatcher = (function() {
   function FunctionWatcher(fun, args) {

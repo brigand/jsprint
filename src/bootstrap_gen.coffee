@@ -75,8 +75,6 @@ bootstrap =
     head.textContent = text
     head
 
-
-
   getBootstrap: ->
     unless bootstrap.weHaveBootstrap()
       link = document.createElement 'link'
