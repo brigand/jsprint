@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jsprint - console.log on steroids</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="description" content="display JavaScript variables as HTML">
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center"><code>jsprint</code> - console.log on steroids</h1>
+    <hr>
+    <div class="row">
+        <div class="col-6" style="height: 400px">
+            <textarea id="live-edit" style="height: 90%;display: block;" class="form-control">
+                jsprint(5);
+
+                jsprint('Reasons to say "Oh my!"', ['lions', 'tigers', 'bears']);
+
+                function sum(a,b) {
+                    return a + b;
+                }
+
+                jsprint(sum, 1, 1);
+            </textarea>
+            <button class="btn btn-block" style="height: 10%;" id="toggle-condensed">Toggle Condensed Mode</button>
+        </div>
+        <div class="col-6" style="height: 400px; overflow-y: auto" id="live-output">
+
+        </div>
+    </div>
+    <hr>
+    <h2>How does it work?</h2>
+    <p>Link to the 4kb minified file, and you can start printing.  Bootstrap will be automagically loaded for
+    the fancy formatting.</p>
+
+    <pre>//brigand.github.io/jsprint/build/output/jsprint.min.js</pre>
+    <pre>&lt;script src="//brigand.github.io/jsprint/build/output/jsprint.min.js"&gt;&lt;/script&gt;</pre>
+    <div class="col-6">
+        <a href="http://codepen.io/pen/def?fork=twBfK" class="btn btn-block btn-primary">Try it on CodePen</a>
+    </div>
+    <form class="col-6" action="http://jsfiddle.net/api/post/library/pure/" method="POST">
+        <input type="submit" href="http://codepen.io/pen/def?fork=twBfK" class="btn btn-block btn-primary" value="Try it on JSFiddle">
+        <input type="hidden" name="resources" value="http://brigand.github.io/jsprint/build/output/jsprint.min.js"/>
+        <input type="hidden" name="title" value="jsprint fiddle"/>
+        <input type="hidden" name="wrap" value="b" />
+        <textarea name="js" cols="0" rows="0" class="hidden">
+function howAwesomeIsJsPrint(ammount) {
+    if (ammount > 10) { return "You're making me blush!" };
+    if (ammount > 8) { return "I'll take that as a compliment." };
+    if (ammount > 5) { return "Well.. okay." };
+    if (ammount > 0) { return "Why are you here?" };
+if (ammount <= 0) { return "Is this personal?" };
+}
+
+jsprint(howAwesomeIsJsPrint, 10);
+</textarea>
+    </form>
+
+    <hr>
+
+    <h2 style="margin-top: 2em">API</h2>
+    <div class="panel" name="jsprint">
+        <div class="panel-heading"><code>jsprint(thing &lt;String|Number|Object|Array&gt;)</code></div>
+        <p>Pass nearly anything as the first parameter.  Strings and numbers are printed simply as-is in a pre-tag.</p>
+        <p>Arrays are printed in a list.</p>
+        <p>Objects, including class instances are passed to <code>JSON.stringify</code> with prettyprinting if your
+        browser supports it.</p>
+        <p>The title will be the constructor name.  Examples include String, Number, Array, Object, Date.</p>
+    </div>
+
+    <hr>
+
+    <div class="panel" name="with_title">
+        <code class="panel-header">jsprint(title &lt;String&gt;, thing &lt;String|Number|Object|Array&gt;)</code>
+        <p>Like the above, but with a custom title, instead of the constructor name.</p>
+    </div>
+
+    <hr>
+
+    <div class="panel" name="functions">
+        <code class="panel-header">jsprint(function &lt;Function&gt;, arg1 &lt;String|Number|Object|Array&gt;, arg2 &lt;String|Number|Object|Array&gt;...)</code>
+        <p>Functions can be used interactivity.</p>
+        <p>Specify each argument, and their type will attempt to be preserved.  This works for numbers, strings,
+        simple objects, and arrays (JSON encoding required).  See <a href="#advanced_functions">advanced functions</a>
+        for more detail.</p>
+    </div>
+
+    <hr>
+
+    <div class="panel" name="functions_with_title">
+        <code class="panel-header">jsprint(title &lt;String&gt;, function &lt;Function&gt;, arg1 &lt;String|Number|Object|Array&gt;, arg2 &lt;String|Number|Object|Array&gt;...)</code>
+        <p>Same as regular functions, but with a custom title instead of the function's name.</p>
+    </div>
+
+    <hr>
+
+    <h2>Advanced Stuff</h2>
+
+    <hr>
+
+    <div class="panel" name="advanced_functions">
+        <code class="panel-header">Advanced Functions</code>
+        <p>If we need a function that deals with class instances, it's best to create a function specifically
+        for <code>jsprint</code>.  For example, consider this point class.</p>
+<pre>
+function Point(x,y){
+    this.x = x; this.y = y;
+}
+
+Point.prototype.abs = function(){
+    return new Point(Math.abs(this.x), Math.abs(this.y));
+}
+</pre>
+        <p>We want to show off our <code>abs</code> function.  To do this,  We create a <code>PointAbsTest</code>
+        function, and pass that to <code>jsprint</code>.</p>
+<pre>
+function PointAbsTest(x, y) {
+    return new Point(x, y).abs();
+}
+
+jsprint(PointAbsTest, -50, 30);
+
+</pre>
+    </div>
+</div>
+
+<script type="text/javascript" src="src/bootstrap_gen.js"></script>
+<script type="text/javascript" src="src/jsprint.js"></script>
+<script>
+    (function () {
+        var output = document.getElementById("live-output"), onchange, editor, toggleCondenced;
+        jsprint.setRootElement(output);
+        editor = document.getElementById("live-edit");
+
+        onchange = function () {
+            jsprint.condenced = false;
+            var evaluator = new Function(editor.value);
+            output.innerHTML = "";
+            evaluator();
+        };
+        editor.addEventListener("keyup", onchange);
+        editor.value = editor.value.replace(/^[ ]{1,16}/gm,'');
+        onchange();
+
+        toggleCondenced = document.getElementById("toggle-condensed");
+        toggleCondenced.addEventListener("click", function(){
+            var value = editor.value, lines, i, out, line;
+            if (value.indexOf("jsprint.condenced") === -1) {
+                value = "jsprint.condenced = true;\n\n" + value;
+            }
+            else {
+                lines = value.split("\n");
+                out = [];
+                for (i=0; i<lines.length; i++){
+                    line = lines[i];
+                    if (line.indexOf("jsprint.condenced") === -1) {
+                        out.push(line);
+                    }
+                }
+                value = out.join("\n");
+            }
+            editor.value = value;
+            onchange();
+        });
+    })();
+
+    
+</script>
+</body>
+</html>
